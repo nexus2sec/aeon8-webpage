@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aeon8 Systems | Coming Soon</title>
+    <style>
+        :root {
+            --midnight-blue: #0A192F;
+            --matte-charcoal: #2A313C;
+            --dynamic-orange: #F97316;
+            --light-grey: #C9D1D9;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-color: var(--matte-charcoal);
+            color: var(--light-grey);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+        .header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--dynamic-orange); /* Placeholder for your shield logo */
+            margin-right: 10px;
+        }
+        .company-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 5px;
+            max-width: 800px;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: normal;
+            margin-bottom: 40px;
+        }
+        .focus-section {
+            display: flex;
+            gap: 40px;
+            max-width: 1000px;
+            width: 100%;
+        }
+        .card {
+            background-color: var(--midnight-blue);
+            padding: 40px;
+            border-radius: 10px;
+            flex: 1;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-product {
+            border-bottom: 5px solid white;
+        }
+        .card-training {
+            background: linear-gradient(135deg, var(--midnight-blue) 0%, var(--dynamic-orange) 100%);
+            border-bottom: 5px solid white;
+        }
+        .card-headline {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+        .card-details {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .cta-section {
+            margin-top: 50px;
+            text-align: center;
+        }
+        .cta-text {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .email-form {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .email-input {
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            border: 2px solid var(--midnight-blue);
+            background-color: transparent;
+            color: white;
+            border-radius: 5px;
+            width: 300px;
+        }
+        .email-input:focus {
+            outline: none;
+            border-color: var(--dynamic-orange);
+        }
+        .cta-button {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            background-color: var(--dynamic-orange);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            font-size: 0.9rem;
+            color: var(--light-grey);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">A</div> <div class="company-name">Aeon8 Systems</div>
+    </div>
+    <div class="main-content">
+        <h1>Securing the Future. Empowering the Next Generation.</h1>
+        <h2>Aeon8 Systems is launching India's premiere cybersecurity hub.</h2>
+        <div class="focus-section">
+            <div class="card card-product">
+                <div class="card-headline">Elite Protection: Kernel Defense</div>
+                <p class="card-details">Enterprise protection, launching soon.</p>
+            </div>
+            <div class="card card-training">
+                <div class="card-headline">Elite Skill: Training Academy</div>
+                <p class="card-details">Hands-on labs and certifications. Launching soon in Gurugram.</p>
+            </div>
+        </div>
+        <div class="cta-section">
+            <div class="cta-text">Join the waitlist. Be the first to secure early access.</div>
+            <form class="email-form">
+                <input type="email" class="email-input" placeholder="Your Email Address" required>
+                <button type="submit" class="cta-button">Notify Me</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        © 2026 Aeon8 Systems. Gurgaon, India. | Secure. Empower.
+    </div>
+</body>
+</html>
