@@ -3,7 +3,576 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aeon8 Systems | Coming Soon</title>
+    <title>Aeon8 Systems | Kernel-Grade Security for Sovereign Infrastructure</title>
+    <meta name="description" content="Aeon8 Systems delivers eBPF/XDP kernel-level network enforcement and AI-driven threat detection for air-gapped, defense, and ICS/SCADA environments.">
+    <style>
+        :root {
+            --midnight:   #050D1A;
+            --navy:       #0A192F;
+            --panel:      #0F2236;
+            --border:     #1B3A5C;
+            --orange:     #F97316;
+            --orange-dim: #C05A10;
+            --teal:       #00D4AA;
+            --text:       #C9D1D9;
+            --text-dim:   #7A8A9A;
+            --white:      #EEF2F7;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--midnight);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ── GRID BACKGROUND ─────────────────────────────────────────── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,212,170,.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,212,170,.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── NAV ─────────────────────────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            height: 64px;
+            background: rgba(5,13,26,.92);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .nav-logo svg { display: block; }
+        .nav-brand-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: .5px;
+        }
+        .nav-brand-name span { color: var(--orange); }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: .9rem;
+            font-weight: 500;
+            transition: color .2s;
+        }
+        .nav-links a:hover { color: var(--white); }
+        .nav-cta {
+            padding: 8px 20px;
+            background: var(--orange);
+            color: #fff !important;
+            border-radius: 4px;
+            font-weight: 600 !important;
+            transition: background .2s !important;
+        }
+        .nav-cta:hover { background: var(--orange-dim) !important; }
+
+        /* ── HERO ────────────────────────────────────────────────────── */
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 14px;
+            border: 1px solid var(--teal);
+            border-radius: 20px;
+            font-size: .78rem;
+            font-weight: 600;
+            color: var(--teal);
+            letter-spacing: .8px;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+        .hero-badge::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--teal);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%,100% { opacity:1; transform:scale(1); }
+            50%      { opacity:.4; transform:scale(1.4); }
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.6rem);
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.15;
+            max-width: 860px;
+            margin-bottom: 24px;
+            letter-spacing: -.5px;
+        }
+        .hero h1 em {
+            font-style: normal;
+            color: var(--orange);
+        }
+        .hero-sub {
+            font-size: 1.15rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 48px;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 64px;
+        }
+        .btn-primary {
+            padding: 14px 32px;
+            background: var(--orange);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background .2s, transform .15s;
+        }
+        .btn-primary:hover { background: var(--orange-dim); transform: translateY(-1px); }
+        .btn-ghost {
+            padding: 14px 32px;
+            background: transparent;
+            color: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: border-color .2s, color .2s;
+        }
+        .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+        /* stat strip */
+        .stat-strip {
+            display: flex;
+            gap: 48px;
+            flex-wrap: wrap;
+            justify-content: center;
+            border-top: 1px solid var(--border);
+            padding-top: 40px;
+            width: 100%;
+            max-width: 700px;
+        }
+        .stat { text-align: center; }
+        .stat-num {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--white);
+        }
+        .stat-num span { color: var(--orange); }
+        .stat-label { font-size: .78rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .8px; }
+
+        /* ── SECTION SHARED ──────────────────────────────────────────── */
+        section { position: relative; z-index: 1; }
+        .section-inner { max-width: 1100px; margin: 0 auto; padding: 96px 24px; }
+        .section-tag {
+            display: inline-block;
+            font-size: .72rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+        .section-desc {
+            font-size: 1rem;
+            color: var(--text-dim);
+            max-width: 560px;
+        }
+
+        /* ── PRODUCTS SECTION ────────────────────────────────────────── */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 48px;
+        }
+        @media (max-width: 700px) {
+            .products-grid { grid-template-columns: 1fr; }
+            nav { padding: 0 20px; }
+            .nav-links { display: none; }
+        }
+        .product-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 36px;
+            transition: border-color .25s, transform .2s;
+        }
+        .product-card:hover { border-color: var(--orange); transform: translateY(-3px); }
+        .product-card.highlight { border-color: var(--orange); }
+        .card-icon {
+            width: 44px; height: 44px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        .icon-orange { background: rgba(249,115,22,.15); }
+        .icon-teal   { background: rgba(0,212,170,.12); }
+        .product-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .product-card p {
+            font-size: .92rem;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            line-height: 1.65;
+        }
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 28px;
+        }
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: .88rem;
+            color: var(--text);
+        }
+        .feature-list li::before {
+            content: '▸';
+            color: var(--teal);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .card-link {
+            font-size: .88rem;
+            font-weight: 600;
+            color: var(--orange);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: gap .2s;
+        }
+        .card-link:hover { gap: 9px; }
+        .badge-beta {
+            display: inline-block;
+            padding: 2px 8px;
+            background: rgba(249,115,22,.15);
+            color: var(--orange);
+            border: 1px solid rgba(249,115,22,.3);
+            border-radius: 20px;
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        /* ── WHY AEON8 ───────────────────────────────────────────────── */
+        .why-section { background: var(--navy); }
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 28px;
+            margin-top: 48px;
+        }
+        @media (max-width: 700px) { .pillars { grid-template-columns: 1fr; } }
+        .pillar {
+            padding: 28px;
+            background: var(--midnight);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+        .pillar-num {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--border);
+            margin-bottom: 12px;
+            line-height: 1;
+        }
+        .pillar h4 { color: var(--white); font-size: 1rem; margin-bottom: 8px; }
+        .pillar p  { color: var(--text-dim); font-size: .88rem; line-height: 1.6; }
+
+        /* ── WAITLIST ─────────────────────────────────────────────────── */
+        .waitlist-section { text-align: center; }
+        .waitlist-section .section-desc { margin: 0 auto 36px; }
+        .email-form {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .email-input {
+            padding: 14px 20px;
+            font-size: 1rem;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            color: var(--white);
+            border-radius: 5px;
+            width: 300px;
+            transition: border-color .2s;
+        }
+        .email-input:focus { outline: none; border-color: var(--orange); }
+        .email-input::placeholder { color: var(--text-dim); }
+        .form-note {
+            font-size: .78rem;
+            color: var(--text-dim);
+            margin-top: 14px;
+        }
+
+        /* ── FOOTER ──────────────────────────────────────────────────── */
+        footer {
+            position: relative; z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 40px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .footer-brand { color: var(--text-dim); font-size: .88rem; }
+        .footer-brand strong { color: var(--white); }
+        .footer-links { display: flex; gap: 24px; }
+        .footer-links a { color: var(--text-dim); text-decoration: none; font-size: .85rem; transition: color .2s; }
+        .footer-links a:hover { color: var(--white); }
+    </style>
+</head>
+<body>
+
+    <!-- ── NAV ── -->
+    <nav>
+        <a class="nav-brand" href="#">
+            <span class="nav-logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 2L4 7.5V16C4 22.5 9.3 28.5 16 30C22.7 28.5 28 22.5 28 16V7.5L16 2Z" fill="#0A192F" stroke="#F97316" stroke-width="1.5"/>
+                    <path d="M16 7L9 10.25V16C9 19.75 12.15 23.25 16 24.5C19.85 23.25 23 19.75 23 16V10.25L16 7Z" fill="#F97316" fill-opacity="0.15"/>
+                    <path d="M13 16L15.5 18.5L20 13.5" stroke="#00D4AA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </span>
+            <span class="nav-brand-name">Aeon<span>8</span> Systems</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#products">Products</a></li>
+            <li><a href="#academy">Academy</a></li>
+            <li><a href="#why">Why Aeon8</a></li>
+            <li><a href="#waitlist" class="nav-cta">Early Access</a></li>
+        </ul>
+    </nav>
+
+    <!-- ── HERO ── -->
+    <section class="hero">
+        <span class="hero-badge">Now in Beta · v1.1</span>
+        <h1>Kernel-Grade Defense for<br><em>Sovereign Infrastructure</em></h1>
+        <p class="hero-sub">
+            India's first eBPF/XDP-native network enforcement platform — purpose-built for
+            air-gapped, defense, and ICS/SCADA environments where cloud agents are not an option.
+        </p>
+        <div class="hero-actions">
+            <a href="#products" class="btn-primary">Explore Platform →</a>
+            <a href="#waitlist" class="btn-ghost">Request Pilot Access</a>
+        </div>
+        <div class="stat-strip">
+            <div class="stat">
+                <span class="stat-num">&lt;<span>1µs</span></span>
+                <span class="stat-label">XDP enforcement latency</span>
+            </div>
+            <div class="stat">
+                <span class="stat-num">22<span>-feature</span></span>
+                <span class="stat-label">ML model (ONNX)</span>
+            </div>
+            <div class="stat">
+                <span class="stat-num">0<span> cloud</span></span>
+                <span class="stat-label">No phone-home</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── PRODUCTS ── -->
+    <section id="products">
+        <div class="section-inner">
+            <span class="section-tag">Platform</span>
+            <h2 class="section-title">Two Products. One Mission.</h2>
+            <p class="section-desc">Enterprise security tooling built for environments where foreign SaaS is not permitted.</p>
+
+            <div class="products-grid">
+
+                <div class="product-card highlight" id="sentinel">
+                    <div class="card-icon icon-orange">🛡</div>
+                    <h3>Aeon Sentinel <span class="badge-beta">Beta</span></h3>
+                    <p>
+                        Autonomous network enforcement engine running directly in the Linux kernel.
+                        Sub-microsecond packet decisions via eBPF/XDP — no copy, no user-space round-trip.
+                    </p>
+                    <ul class="feature-list">
+                        <li>XDP/eBPF enforcement at NIC — &lt;1µs drop latency</li>
+                        <li>Rust detection engine (PyO3) + ONNX ML inference</li>
+                        <li>22-feature RandomForest anomaly scoring (no cloud)</li>
+                        <li>P2P gossip mesh — swarm-wide ban propagation via QUIC</li>
+                        <li>TLS 1.3 JA3 fingerprinting — malware C2 detection</li>
+                        <li>Air-gapped deployment · CERT-In aligned</li>
+                    </ul>
+                    <a href="https://github.com/try2hk/Aeon8_Sentinel" class="card-link" target="_blank" rel="noopener">
+                        GitHub (GPL-3.0) →
+                    </a>
+                </div>
+
+                <div class="product-card" id="academy">
+                    <div class="card-icon icon-teal">🎓</div>
+                    <h3>Aeon8 Academy</h3>
+                    <p>
+                        Hands-on cybersecurity training built for professionals entering
+                        SOC, Red Team, and kernel security roles — launching in Gurugram.
+                    </p>
+                    <ul class="feature-list">
+                        <li>eBPF / XDP kernel programming (live labs)</li>
+                        <li>Network forensics & incident response</li>
+                        <li>ICS/SCADA security for OT engineers</li>
+                        <li>ML for threat detection — from scratch</li>
+                        <li>Certifications aligned to CERT-In / DSCI framework</li>
+                        <li>Batch 1 launching Gurugram, Q3 2026</li>
+                    </ul>
+                    <a href="#waitlist" class="card-link">Join Waitlist →</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ── WHY AEON8 ── -->
+    <section id="why" class="why-section">
+        <div class="section-inner">
+            <span class="section-tag">Differentiators</span>
+            <h2 class="section-title">Why Aeon8?</h2>
+            <p class="section-desc">Not another SIEM dashboard. An enforcement engine for environments that cannot afford a breach.</p>
+
+            <div class="pillars">
+                <div class="pillar">
+                    <div class="pillar-num">01</div>
+                    <h4>Zero Cloud Dependency</h4>
+                    <p>Fully air-gapped. No telemetry sent to any external service. Sovereign operation from day one — mandatory for defence and nuclear networks.</p>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-num">02</div>
+                    <h4>Kernel-Level Speed</h4>
+                    <p>XDP hooks fire at the NIC — 50–500× faster than Suricata/Snort. Malicious packets are dropped before they reach user space.</p>
+                </div>
+                <div class="pillar">
+                    <div class="pillar-num">03</div>
+                    <h4>Made in India</h4>
+                    <p>Built for CERT-In compliance, STQC certification track, and Atma Nirbhar Bharat procurement. No foreign vendor lock-in.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── WAITLIST ── -->
+    <section id="waitlist" class="waitlist-section">
+        <div class="section-inner">
+            <span class="section-tag">Early Access</span>
+            <h2 class="section-title">Be Part of Batch Zero</h2>
+            <p class="section-desc">
+                We're onboarding 3–5 pilot customers for Aeon Sentinel and the first Academy cohort.
+                PSU, defence, ICS/SCADA operators — priority queue.
+            </p>
+            <form class="email-form" onsubmit="handleWaitlist(event)">
+                <!-- honeypot — hidden from real users -->
+                <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+                <input type="email" class="email-input" placeholder="Work email address" required autocomplete="email">
+                <button type="submit" class="btn-primary">Request Access</button>
+            </form>
+            <p class="form-note" id="waitlist-msg">No spam. Pilot slots are limited.</p>
+        </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+        <div class="footer-brand">
+            <strong>Aeon8 Systems</strong> · Gurugram, India<br>
+            © 2026 · GPL-3.0 Open Core · <em>Secure. Empower.</em>
+        </div>
+        <div class="footer-links">
+            <a href="https://github.com/try2hk/Aeon8_Sentinel" target="_blank" rel="noopener">GitHub</a>
+            <a href="mailto:contact@aeon8systems.in">Contact</a>
+            <a href="#waitlist">Early Access</a>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Waitlist form — basic honeypot + feedback
+        function handleWaitlist(e) {
+            e.preventDefault();
+            const form = e.target;
+            const honeypot = form.querySelector('input[name="website"]');
+            const msg = document.getElementById('waitlist-msg');
+            if (honeypot && honeypot.value) return; // bot detected
+            const email = form.querySelector('input[type="email"]').value;
+            msg.textContent = '✓ Received — we\'ll reach out soon. (' + email + ')';
+            msg.style.color = '#00D4AA';
+            form.querySelector('input[type="email"]').value = '';
+        }
+    </script>
+</body>
+</html>
+
     <style>
         :root {
             --midnight-blue: #0A192F;
