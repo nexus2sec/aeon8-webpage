@@ -3,13 +3,13 @@
 
 export const SITE_NAME = 'Aeon8 Systems';
 export const SITE_DESCRIPTION =
-  'Sovereign Cybersecurity & Kernel Engineering — India's first eBPF/XDP-native autonomous network enforcement platform.';
+  "Sovereign Cybersecurity & Kernel Engineering - India's first eBPF/XDP-native autonomous network enforcement platform.";
 
 export const SOCIAL_LINKS = {
-  github: 'https://github.com/try2hk/Aeon8_Sentinel',
-  email: 'contact@aeon8systems.in',
-  pilotEmail: 'pilot@aeon8systems.in',
-  academyEmail: 'academy@aeon8systems.in',
+  email: 'info@aeon8.in',
+  supportEmail: 'support@aeon8.in',
+  contactEmail: 'contect@aeon8.in',
+  trainingEmail: 'trainig@aeon8.in',
 };
 
 export const NAVIGATION = [

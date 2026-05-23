@@ -4,13 +4,10 @@
 export const env = {
   // API
   apiBaseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000',
-  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'contact@aeon8systems.in',
-  pilotEmail: process.env.NEXT_PUBLIC_PILOT_EMAIL || 'pilot@aeon8systems.in',
-  academyEmail: process.env.NEXT_PUBLIC_ACADEMY_EMAIL || 'academy@aeon8systems.in',
-
-  // GitHub
-  githubRepo: process.env.NEXT_PUBLIC_GITHUB_REPO || 'https://github.com/try2hk/Aeon8_Sentinel',
-  githubOrg: process.env.NEXT_PUBLIC_GITHUB_ORG || 'try2hk',
+  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'contect@aeon8.in',
+  supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL || 'support@aeon8.in',
+  trainingEmail: process.env.NEXT_PUBLIC_TRAINING_EMAIL || 'trainig@aeon8.in',
+  infoEmail: process.env.NEXT_PUBLIC_INFO_EMAIL || 'info@aeon8.in',
 
   // Site
   siteName: process.env.NEXT_PUBLIC_SITE_NAME || 'Aeon8 Systems',
