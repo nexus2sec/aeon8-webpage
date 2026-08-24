@@ -1,4 +1,4 @@
-# Contributing to Aeon8Web
+# Contributing to Aeon8Corp
 
 Thank you for wanting to contribute to Aeon8Web! This guide will help you get started.
 
